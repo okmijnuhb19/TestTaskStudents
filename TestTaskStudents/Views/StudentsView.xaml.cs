@@ -23,6 +23,8 @@ namespace TestTaskStudents.Views
         public StudentsView(StudentsViewModel viewmodel)
         {
             InitializeComponent();
+            viewmodel.CurrentWindow = this;
+            this.SizeChanged += viewmodel.ViewAppear;
             DataContext = viewmodel;
         }
     }

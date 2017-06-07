@@ -37,6 +37,9 @@
     <Reference Include="Autofac, Version=4.6.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.4.6.0\lib\net45\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="NumericUpDown, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NumericUpDown.3.0.1.0\lib\NumericUpDown.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -57,12 +60,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\AgeConverter.cs" />
+    <Compile Include="Converters\NameConverter.cs" />
+    <Compile Include="Handlers\CommandHandler.cs" />
     <Compile Include="Models\GenderType.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Services\IStudentsService.cs" />
     <Compile Include="Services\StudentsService.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
-    <Compile Include="ViewModels\EditSudentViewModel.cs" />
+    <Compile Include="ViewModels\EditStudentViewModel.cs" />
     <Compile Include="ViewModels\StudentsViewModel.cs" />
     <Compile Include="Views\EditStudentView.xaml.cs">
       <DependentUpon>EditStudentView.xaml</DependentUpon>
@@ -118,9 +124,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Converters\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\Students.xml" />
   </ItemGroup>

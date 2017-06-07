@@ -5,7 +5,7 @@ namespace TestTaskStudents.Models
     [Serializable]
     public class Student
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         public string FirstName { get; set; }
 

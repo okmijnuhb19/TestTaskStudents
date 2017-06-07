@@ -1,15 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 
 namespace TestTaskStudents.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
+        public virtual void ViewAppear(object sender, EventArgs e)
+        {
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public Window CurrentWindow { get; set; }
 
         protected void NotifyPropertyChanged(
             string propertyName)

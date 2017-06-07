@@ -5,11 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TestTaskStudents.Views"
         xmlns:viewModels="clr-namespace:TestTaskStudents.ViewModels"
+        xmlns:converters="clr-namespace:TestTaskStudents.Converters"
         mc:Ignorable="d"
-        Title="StudentsView" Height="300" Width="300">
+        Title="StudentsView" Height="500" Width="500">
     <Window.DataContext>
         <viewModels:StudentsViewModel />
     </Window.DataContext>
+    <Window.Resources>
+        <ResourceDictionary>
+            <converters:AgeConverter x:Key="AgeConverter"/>
+            <converters:NameConverter x:Key="NameConverter"/>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="4*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Button Content="Добавить" Command="{Binding AddStudentCommand}" Height="50" Width="100" Grid.Column="0" Grid.Row="0"></Button>
+        <ListView ItemsSource="{Binding Students}" Grid.Column="0" Grid.Row="1">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding .,Converter={StaticResource NameConverter}}">Имя</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Age, Converter={StaticResource AgeConverter}}">Возраст</GridViewColumn>
+                </GridView>
+            </ListView.View>
+            <ListView.Resources>
+            </ListView.Resources>
+        </ListView>
     </Grid>
 </Window>

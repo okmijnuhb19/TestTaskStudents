@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml.Serialization;
 using TestTaskStudents.Models;
 
 namespace TestTaskStudents.Services
 {
-    public class StudentsService :IStudentsService
+    public class StudentsService : IStudentsService
     {
         private readonly XmlSerializer serializer;
         public StudentsService()
@@ -18,8 +19,8 @@ namespace TestTaskStudents.Services
         {
             using (var fs = new FileStream("Students.xml", FileMode.OpenOrCreate))
             {
-                var students = serializer.Deserialize(fs);
-                return (List<Student>)students;
+                var students = (Student[])serializer.Deserialize(fs);
+                return students.ToList();
             }
         }
 
@@ -28,14 +29,29 @@ namespace TestTaskStudents.Services
             throw new System.NotImplementedException();
         }
 
-        public int SaveStudents(IEnumerable<Student> students)
+        public void SaveStudents(IEnumerable<Student> students)
         {
-            throw new System.NotImplementedException();
+            using (var fs = new FileStream("Students.xml", FileMode.OpenOrCreate))
+            {
+                serializer.Serialize(fs,students.ToArray());
+            }
         }
 
-        public IEnumerable<Student> EditStudent(Student student)
+        public void EditStudent(Student student)
         {
-            throw new System.NotImplementedException();
+            var students = LoadStudents().ToList();
+            if (student.Id == null)
+            {
+                student.Id = students.LastOrDefault()?.Id + 1;
+                students.Add(student);
+                SaveStudents(students);
+            }
+            else
+            {
+                students.Remove(students.FirstOrDefault(s => s.Id == student.Id));
+                students.Add(student);
+                SaveStudents(students.OrderBy(s => s.Id).ToList());
+            }
         }
     }
 }

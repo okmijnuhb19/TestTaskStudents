@@ -10,8 +10,8 @@ namespace TestTaskStudents.Services
 
         IEnumerable<Student> DeleteStudents();
 
-        int SaveStudents(IEnumerable<Student> students);
+        void SaveStudents(IEnumerable<Student> students);
 
-        IEnumerable<Student> EditStudent(Student student);
+        void EditStudent(Student student);
     }
 }

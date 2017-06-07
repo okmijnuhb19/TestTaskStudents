@@ -35,7 +35,7 @@ namespace TestTaskStudents
 
         private static void BuildupContainer(ContainerBuilder builder)
         {
-            builder.RegisterType<StudentsService>().As<IStudentsService>();
+            builder.RegisterType<StudentsService>().As<IStudentsService>().SingleInstance();
         }
     }
 }
