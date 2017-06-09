@@ -20,9 +20,16 @@ namespace TestTaskStudents.Services
         {
             using (var fs = new FileStream("Students.xml", FileMode.OpenOrCreate))
             {
-                var s = serializer.Deserialize(fs);
-                var students = (Student[])s;
-                return students.ToList();
+                try
+                {
+                    var s = serializer.Deserialize(fs);
+                    var students = (Student[]) s;
+                    return students.ToList();
+                }
+                catch (Exception)
+                {
+                    return new List<Student>();
+                }
             }
         }
 
