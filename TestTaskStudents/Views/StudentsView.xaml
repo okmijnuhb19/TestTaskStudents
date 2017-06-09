@@ -16,7 +16,8 @@
             <converters:AgeConverter x:Key="AgeConverter"/>
             <converters:NameConverter x:Key="NameConverter"/>
             <converters:IsNotNullConverter x:Key="IsNotNullConverter"/>
-            <converters:IsNullConverter x:Key="IsNullConverter"/>
+            <converters:IsListEmptyToVisibility x:Key="IsListEmptyToVisibility"/>
+            <converters:IsListViewVisible x:Key="IsListViewVisible"/>
             
             <Style x:Key="ButtonStyle" TargetType="Button">
                 <Setter Property="Width" Value="50"></Setter>
@@ -28,6 +29,7 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="4*"></RowDefinition>
         </Grid.RowDefinitions>
@@ -49,18 +51,27 @@
                     IsEnabled="{Binding SelectedStudent, Converter={StaticResource IsNotNullConverter}}"
                     Style="{StaticResource ButtonStyle}"/>
         </StackPanel>
+        
+        <Label Content="No saved students"
+               Grid.Column="0" 
+               Grid.Row="1"
+               Visibility="{Binding Students, Converter={StaticResource IsListEmptyToVisibility}}"
+               HorizontalAlignment="Stretch"
+               VerticalAlignment="Stretch"></Label>
+        
         <ListView ItemsSource="{Binding Students}"
-                  SelectedItem="{Binding SelectedStudent, Mode=OneWayToSource}"
-                  Grid.Column="0" 
-                  Grid.Row="1">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding .,Converter={StaticResource NameConverter}}">Имя</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Age, Converter={StaticResource AgeConverter}}">Возраст</GridViewColumn>
-                </GridView>
-            </ListView.View>
-            <ListView.Resources>
-            </ListView.Resources>
-        </ListView>
+                      Grid.Column="0" 
+                      Grid.Row="2"
+                      SelectedItem="{Binding SelectedStudent, Mode=OneWayToSource}"
+                      Visibility="{Binding Students, Converter={StaticResource IsListViewVisible}}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding .,Converter={StaticResource NameConverter}}">Имя</GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Age, Converter={StaticResource AgeConverter}}">Возраст</GridViewColumn>
+                    </GridView>
+                </ListView.View>
+                <ListView.Resources>
+                </ListView.Resources>
+            </ListView>
     </Grid>
 </Window>
