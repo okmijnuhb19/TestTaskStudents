@@ -3,45 +3,47 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TestTaskStudents.Views"
-        xmlns:viewModels="clr-namespace:TestTaskStudents.ViewModels"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:controlLib="clr-namespace:ControlLib;assembly=NumericUpDown"
         mc:Ignorable="d"
         Title="EditStudentView" Height="350" Width="300">
+    <Window.Resources>
+        <ResourceDictionary>
+            <Style TargetType="StackPanel" x:Key="StackPanelStyle">
+                <Setter Property="Orientation" Value="Horizontal"/>
+                <Setter Property="Height" Value="60"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
     <StackPanel Orientation="Vertical">
-        <StackPanel Orientation="Horizontal"
-                    Height="60"
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Stretch">
+        <StackPanel Style="{StaticResource StackPanelStyle}">
             <Label HorizontalAlignment="Left" 
                    VerticalAlignment="Center"
                    Content="First Name" />
+            
             <TextBox HorizontalAlignment="Right"
                      Width="180"
                      VerticalAlignment="Center"
                      Text="{Binding FirstName}" />
         </StackPanel>
-        
-        <StackPanel Orientation="Horizontal"
-                    Height="60"
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Stretch">
+
+        <StackPanel Style="{StaticResource StackPanelStyle}">
             <Label HorizontalAlignment="Left" 
                    Content="Last Name" 
                    VerticalAlignment="Center"/>
+            
             <TextBox HorizontalAlignment="Right"
                      Width="180"
                      VerticalAlignment="Center"
                      Text="{Binding LastName}" />
         </StackPanel>
-        <StackPanel Orientation="Horizontal"
-                    Height="60"
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Stretch">
+
+        <StackPanel Style="{StaticResource StackPanelStyle}">
             <Label HorizontalAlignment="Left" 
                    VerticalAlignment="Center"
                    Content="FirstName" />
+            
             <controlLib:NumericUpDown MaxValue="100"
                                       MinValue="16"
                                       Value="{Binding Age}"
@@ -50,13 +52,12 @@
                                       x:Name="NumericUpDown"
                                       VerticalAlignment="Center" />
         </StackPanel>
-        <StackPanel Orientation="Horizontal"
-                    Height="60"
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Stretch">
+        
+        <StackPanel Style="{StaticResource StackPanelStyle}">
             <Label HorizontalAlignment="Left" 
                    VerticalAlignment="Center"
                    Content="Gender" />
+            
             <ComboBox HorizontalAlignment="Right"
                       ItemsSource="{Binding Genders}"
                       Width="180"

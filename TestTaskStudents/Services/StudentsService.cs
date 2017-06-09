@@ -10,6 +10,7 @@ namespace TestTaskStudents.Services
     public class StudentsService : IStudentsService
     {
         private readonly XmlSerializer serializer;
+
         public StudentsService()
         {
             serializer= new XmlSerializer(typeof(Student[]));
@@ -35,6 +36,7 @@ namespace TestTaskStudents.Services
         
         public void SaveStudents(IEnumerable<Student> students)
         {
+            File.WriteAllText("Students.xml", string.Empty);
             using (var fs = new FileStream("Students.xml", FileMode.OpenOrCreate))
             {
                 serializer.Serialize(fs,students.ToArray());
@@ -44,9 +46,9 @@ namespace TestTaskStudents.Services
         public void EditStudent(Student student)
         {
             var students = LoadStudents().ToList();
-            if (student.Id <0)
+            if (student.Id < 0)
             {
-                student.Id = students.Any()?(int)students.LastOrDefault()?.Id + 1:0;
+                student.Id = students.Any() ? (int) students.LastOrDefault()?.Id + 1 : 0;
                 students.Add(student);
                 SaveStudents(students);
             }

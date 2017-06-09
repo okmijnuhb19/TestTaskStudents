@@ -16,13 +16,13 @@ namespace TestTaskStudents.ViewModels
 {
     public class EditStudentViewModel:BaseViewModel
     {
-        private IStudentsService studentsService;
+        private readonly IStudentsService studentsService;
+
         private Student student;
         private string firstName;
         private string lastName;
         private int age;
         private GenderType gender;
-
         private ICommand saveCommand;
         private ICommand canselCommand;
         private BaseViewModel previousViewModel;
@@ -32,28 +32,6 @@ namespace TestTaskStudents.ViewModels
 
         public ICommand CancelCommand => canselCommand ??
                                        (canselCommand = new CommandHandler(Cancel, true));
-
-        private void Cancel(object obj)
-        {
-            NavigateToMainWindow();
-        }
-
-        private void Save(object obj)
-        {
-            student.FirstName = FirstName;
-            student.Last = LastName;
-            student.Age = Age;
-            student.Gender = (int)Gender;
-            studentsService.EditStudent(student);
-            NavigateToMainWindow();
-        }
-
-        private void NavigateToMainWindow()
-        {
-            previousViewModel.ViewAppear(previousViewModel.CurrentWindow,EventArgs.Empty);
-            previousViewModel.CurrentWindow.Show();
-            CurrentWindow.Close();
-        }
 
         public string FirstName {
             get => firstName;
@@ -98,6 +76,50 @@ namespace TestTaskStudents.ViewModels
         {
             studentsService = App.Container.Resolve<IStudentsService>();
             Initialize(student, previousViewModel);
+        }
+
+        private void Cancel(object obj)
+        {
+            NavigateToMainWindow();
+        }
+
+        private void Save(object obj)
+        {
+            if (!ValideteStudentFields())
+            {
+                ShowValidationErrorMessage();
+                return;
+            }
+            student.FirstName = FirstName;
+            student.Last = LastName;
+            student.Age = Age;
+            student.Gender = (int)Gender;
+            studentsService.EditStudent(student);
+            NavigateToMainWindow();
+        }
+
+        private static void ShowValidationErrorMessage()
+        {
+            MessageBox.Show($"Please enter valid data!{Environment.NewLine}Requred First And Last Name.{Environment.NewLine}Age Must be between 16 and 100", "Warning",
+                MessageBoxButton.OK, MessageBoxImage.Exclamation);
+        }
+
+        private bool ValideteStudentFields()
+        {
+            if (string.IsNullOrWhiteSpace(FirstName) || string.IsNullOrWhiteSpace(LastName))
+            {
+                return false;
+            }
+
+            return Age >= 16 && Age <= 100;
+        }
+
+        private void NavigateToMainWindow()
+        {
+            CurrentWindow.Hide();
+            previousViewModel.ViewAppear(previousViewModel.CurrentWindow, EventArgs.Empty);
+            previousViewModel.CurrentWindow.Show();
+            CurrentWindow.Close();
         }
 
         private void Initialize(Student student, BaseViewModel previousViewModel)
