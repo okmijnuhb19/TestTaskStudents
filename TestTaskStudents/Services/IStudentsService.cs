@@ -8,7 +8,7 @@ namespace TestTaskStudents.Services
     {
         IEnumerable<Student> LoadStudents();
 
-        IEnumerable<Student> DeleteStudents();
+        IEnumerable<Student> DeleteStudent(Student student);
 
         void SaveStudents(IEnumerable<Student> students);
 

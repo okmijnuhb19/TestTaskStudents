@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Xml.Serialization;
 
 namespace TestTaskStudents.Models
 {
     [Serializable]
     public class Student
     {
-        public int? Id { get; set; }
+        [XmlAttribute("Id")]
+        public int Id { get; set; }
 
         public string FirstName { get; set; }
 

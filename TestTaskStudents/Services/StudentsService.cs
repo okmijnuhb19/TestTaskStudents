@@ -19,16 +19,20 @@ namespace TestTaskStudents.Services
         {
             using (var fs = new FileStream("Students.xml", FileMode.OpenOrCreate))
             {
-                var students = (Student[])serializer.Deserialize(fs);
+                var s = serializer.Deserialize(fs);
+                var students = (Student[])s;
                 return students.ToList();
             }
         }
 
-        public IEnumerable<Student> DeleteStudents()
+        public IEnumerable<Student> DeleteStudent(Student student)
         {
-            throw new System.NotImplementedException();
+            var students = LoadStudents().ToList();
+            students.Remove(students.FirstOrDefault(s => s.Id == student.Id));
+            SaveStudents(students);
+            return students;
         }
-
+        
         public void SaveStudents(IEnumerable<Student> students)
         {
             using (var fs = new FileStream("Students.xml", FileMode.OpenOrCreate))
@@ -40,9 +44,9 @@ namespace TestTaskStudents.Services
         public void EditStudent(Student student)
         {
             var students = LoadStudents().ToList();
-            if (student.Id == null)
+            if (student.Id <0)
             {
-                student.Id = students.LastOrDefault()?.Id + 1;
+                student.Id = students.Any()?(int)students.LastOrDefault()?.Id + 1:0;
                 students.Add(student);
                 SaveStudents(students);
             }

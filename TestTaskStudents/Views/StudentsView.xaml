@@ -7,7 +7,7 @@
         xmlns:viewModels="clr-namespace:TestTaskStudents.ViewModels"
         xmlns:converters="clr-namespace:TestTaskStudents.Converters"
         mc:Ignorable="d"
-        Title="StudentsView" Height="500" Width="500">
+        Title="StudentsView" Height="400" Width="300">
     <Window.DataContext>
         <viewModels:StudentsViewModel />
     </Window.DataContext>
@@ -15,6 +15,15 @@
         <ResourceDictionary>
             <converters:AgeConverter x:Key="AgeConverter"/>
             <converters:NameConverter x:Key="NameConverter"/>
+            <converters:IsNotNullConverter x:Key="IsNotNullConverter"/>
+            <converters:IsNullConverter x:Key="IsNullConverter"/>
+            
+            <Style x:Key="ButtonStyle" TargetType="Button">
+                <Setter Property="Width" Value="50"></Setter>
+                <Setter Property="Height" Value="25"></Setter>
+                <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                <Setter Property="Margin" Value="25,0,25,0"></Setter>
+            </Style>
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
@@ -25,8 +34,25 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Button Content="Добавить" Command="{Binding AddStudentCommand}" Height="50" Width="100" Grid.Column="0" Grid.Row="0"></Button>
-        <ListView ItemsSource="{Binding Students}" Grid.Column="0" Grid.Row="1">
+        <StackPanel Grid.Column="0" 
+                    Grid.Row="0" 
+                    Orientation="Horizontal">
+            <Button Content="Add" 
+                    Command="{Binding AddStudentCommand}" 
+                    Style="{StaticResource ButtonStyle}"/>
+            <Button Content="Edit" 
+                    Command="{Binding EditStudentCommand}" 
+                    IsEnabled="{Binding SelectedStudent, Converter={StaticResource IsNotNullConverter}}"
+                    Style="{StaticResource ButtonStyle}"/>
+            <Button Content="Delete" 
+                    Command="{Binding DeleteStudentCommand}" 
+                    IsEnabled="{Binding SelectedStudent, Converter={StaticResource IsNotNullConverter}}"
+                    Style="{StaticResource ButtonStyle}"/>
+        </StackPanel>
+        <ListView ItemsSource="{Binding Students}"
+                  SelectedItem="{Binding SelectedStudent, Mode=OneWayToSource}"
+                  Grid.Column="0" 
+                  Grid.Row="1">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding .,Converter={StaticResource NameConverter}}">Имя</GridViewColumn>

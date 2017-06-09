@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Students>
+<ArrayOfStudent>
   <Student Id="0">
     <FirstName>Robert</FirstName>
     <Last>Jarman</Last>
@@ -48,4 +48,4 @@
     <Age>20</Age>
     <Gender>0</Gender>
   </Student>
-</Students>
+</ArrayOfStudent>
